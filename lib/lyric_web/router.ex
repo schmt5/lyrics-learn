@@ -25,6 +25,10 @@ defmodule LyricWeb.Router do
 
     live "/songs/:id", SongLive.Show, :show
     live "/songs/:id/show/edit", SongLive.Show, :edit
+
+    live "/games", GameLive.Index
+    live "/games/:id", GameLive.Host
+    live "/games/:id/play", GameLive.Play
   end
 
   # Other scopes may use custom stacks.

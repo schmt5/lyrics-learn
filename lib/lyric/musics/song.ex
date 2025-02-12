@@ -7,6 +7,8 @@ defmodule Lyric.Musics.Song do
     field :artist, :string
     field :album, :string
 
+    has_many :games, Lyric.Playground.Game
+
     timestamps(type: :utc_datetime)
   end
 

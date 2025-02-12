@@ -1,0 +1,18 @@
+<.header>
+    Game-ID {@game.id}
+    <:subtitle>Warte auf Spieler:innen</:subtitle>
+    <:actions>
+        <.button phx-click="start_game">Los</.button>
+        </:actions>
+    </.header>
+    
+    <div class="flex gap-8 mt-8">
+        <div class="flex-[3] grid grid-cols-2 gap-4">
+            <p>player 1</p>
+            <p>player 2</p>
+            <p>player 3</p>
+        </div>
+        <div class="flex-1">
+            <p>QR Code</p>
+        </div>
+    </div>
