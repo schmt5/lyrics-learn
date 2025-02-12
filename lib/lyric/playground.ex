@@ -37,6 +37,8 @@ defmodule Lyric.Playground do
   """
   def get_game!(id), do: Repo.get!(Game, id)
 
+  def get_game_with_song!(id), do: Repo.get!(Game, id) |> Repo.preload(:song)
+
   @doc """
   Creates a game.
 

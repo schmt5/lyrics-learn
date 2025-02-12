@@ -11,7 +11,7 @@ defmodule LyricWeb.GameLive.Host do
 
   @impl true
   def handle_params(%{"id" => id}, _uri, socket) do
-    game = Playground.get_game!(id)
+    game = Playground.get_game_with_song!(id)
 
     IO.inspect(game)
 
