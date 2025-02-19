@@ -9,6 +9,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
+## Fly.io
+Make DB migration for fly.io
+```
+// connect to fly.io (container must be running)
+fly ssh console
+
+// Make migration
+/app/bin/lyric eval "Lyric.Release.migrate"
+```
+
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/
