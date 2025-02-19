@@ -11,14 +11,17 @@ defmodule Lyric.Application do
       LyricWeb.Telemetry,
       Lyric.Repo,
       {Ecto.Migrator,
-        repos: Application.fetch_env!(:lyric, :ecto_repos),
-        skip: skip_migrations?()},
+       repos: Application.fetch_env!(:lyric, :ecto_repos), skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:lyric, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Lyric.PubSub},
+      LyricWeb.Presence,
+
       # Start the Finch HTTP client for sending emails
       {Finch, name: Lyric.Finch},
+
       # Start a worker by calling: Lyric.Worker.start_link(arg)
       # {Lyric.Worker, arg},
+
       # Start to serve requests, typically the last entry
       LyricWeb.Endpoint
     ]
