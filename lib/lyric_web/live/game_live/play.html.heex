@@ -1,1 +1,19 @@
-<div>Good luck player</div>
+<div>
+  <%= case @status do %> <% :joining -> %>
+  <div class="max-w-md mx-auto">
+    <.form for={@form} phx-submit="join_game">
+        <.input type="text" field={@form[:player_name]} label="Name" placeholder="Lyrics King" required />
+        <.button type="submit" class="mt-4 w-full">Spiel beitreten</.button>
+      </.form>
+  </div>
+  <% :waiting -> %>
+  <div>
+    <p>Waiting for the game to start...</p>
+  </div>
+
+  <% :playing -> %>
+  <div>
+    <p>Game is in progress...</p>
+  </div>
+  <% end %>
+</div>

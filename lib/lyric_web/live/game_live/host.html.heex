@@ -1,18 +1,27 @@
+<%= case @game_state do %>
+<% :waiting -> %>
 <.header>
     Game-ID {@game.id}
     <:subtitle>Warte auf Spieler:innen</:subtitle>
     <:actions>
-        <.button phx-click="start_game">Los</.button>
+        <.button phx-click="start_game">Spiel starten</.button>
         </:actions>
     </.header>
     
     <div class="flex gap-8 justify-between mt-8">
         <div class="flex-1 grid grid-cols-2 content-start gap-4">
-            <p>player 1</p>
-            <p>player 2</p>
-            <p>player 3</p>
+            <%= for player <- @players do %>
+             <p class="truncate py-2 px-4 rounded-md text-center font-medium" style={"background-color: #{player.color}"}>
+                <%= player.name %>
+            </p>
+            <% end %>
         </div>
         <div>
             <img src={"data:image/svg+xml;base64,#{@qr_code}"} alt="QR-Code for joining game" />
         </div>
     </div>
+<% :playing -> %>
+<p>playing</p>
+<% :finished -> %>
+<p>finished</p>
+<% end %>
