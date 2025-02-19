@@ -1,15 +1,25 @@
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
-
 name: Fly Deploy
 on:
-  push:
-    branches:
-      - main
+  # Removed automatic trigger on push to main
+  # push:
+  #   branches:
+  #     - main
+
+  # Only run when manually triggered
+  workflow_dispatch:
+    # Optional: Add inputs if you want to provide parameters when manually running
+    # inputs:
+    #   environment:
+    #     description: 'Environment to deploy to'
+    #     required: true
+    #     default: 'production'
+
 jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
-    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    concurrency: deploy-group # optional: ensure only one action runs at a time
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
