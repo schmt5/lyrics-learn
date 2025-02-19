@@ -19,7 +19,7 @@ defmodule LyricWeb.Ui.Button do
 
   def button(assigns) do
     ~H"""
-    <button type={@type} class={[button_class(@variant), icon_only_class(@icon_only)]} {@rest}>
+    <button type={@type} class={[button_class(@variant), icon_only_class(@icon_only), @class]} {@rest}>
       {render_slot(@inner_block)}
     </button>
     """
