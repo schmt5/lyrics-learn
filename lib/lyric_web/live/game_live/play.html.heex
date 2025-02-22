@@ -1,13 +1,32 @@
 <div>
-  <%= case @status do %>
-  <% :waiting -> %>
-  <div>
-    <p>Waiting for the game to start...</p>
+  <%= case @status do %> <% :waiting -> %>
+  <div class="flex justify-center items-center min-h-32">
+    <h1 class="text-5xl font-bold text-center text-gray-600">
+      Warte auf andere Spieler:innen
+    </h1>
+  </div>
+
+  <% :starting -> %>
+  <div class="flex justify-center items-center min-h-32">
+    <h1 class="text-5xl font-bold text-center bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-transparent bg-clip-text">
+      Mach dich bereit!
+    </h1>
   </div>
 
   <% :playing -> %>
-  <div>
-    <p>Game is in progress...</p>
+  <div class="mt-24">
+    <%= if @options do %>
+    <div class="grid grid-cols-2 gap-4">
+      <%= for {option, index} <- Enum.with_index(@options) do %>
+      <.button
+        phx-click="select_option"
+        phx-value-option={option}
+        class={"h-24 #{get_button_color(index)}"}>
+        <%= option %>
+      </.button>
+    <% end %>
+    </div>
+    <% end %>
   </div>
   <% end %>
 </div>

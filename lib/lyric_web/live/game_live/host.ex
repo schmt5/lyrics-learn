@@ -42,11 +42,24 @@ defmodule LyricWeb.GameLive.Host do
   end
 
   @impl true
+  def handle_info({:broadcast_game_playing, topic}, socket) do
+    Endpoint.broadcast(topic, "game_playing", %{
+      round: 1,
+      options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    })
+
+    {:noreply, assign(socket, :game_state, :playing)}
+  end
+
+  @impl true
   def handle_event("start_game", _params, socket) do
     topic = @game_prefix_topic <> to_string(socket.assigns.game.id)
     Endpoint.broadcast(topic, "game_started", %{})
 
-    {:noreply, assign(socket, :game_state, :playing)}
+    # Schedule the "game_playing" broadcast after 3000ms (3 seconds)
+    Process.send_after(self(), {:broadcast_game_playing, topic}, 3000)
+
+    {:noreply, assign(socket, :game_state, :starting)}
   end
 
   defp get_qr_code(id) do

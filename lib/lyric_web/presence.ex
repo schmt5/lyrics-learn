@@ -45,8 +45,6 @@ defmodule LyricWeb.Presence do
   def list_players(game_id) do
     topic = @player_activity_prefix_topic <> game_id
 
-    players = Presence.list(topic) |> get_in(["players", :metas]) || []
-    IO.inspect(players)
-    players
+    Presence.list(topic) |> get_in(["players", :metas]) || []
   end
 end
