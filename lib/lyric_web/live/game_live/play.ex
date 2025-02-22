@@ -26,9 +26,14 @@ defmodule LyricWeb.GameLive.Play do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_info(%{event: "game_started"}, socket) do
+    {:noreply, assign(socket, :status, :playing)}
+  end
+
   defp maybe_join_game(socket) do
     if connected?(socket) do
-      game_topic = @game_prefix_topic <> socket.assigns.game_id
+      game_topic = @game_prefix_topic <> to_string(socket.assigns.game_id)
       player_name = socket.assigns.player_name
 
       Presence.track_player(self(), socket.assigns.game_id, player_name)

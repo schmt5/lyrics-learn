@@ -1,8 +1,11 @@
 defmodule LyricWeb.GameLive.Host do
+  alias LyricWeb.Endpoint
   use LyricWeb, :live_view
 
   alias LyricWeb.Presence
   alias Lyric.Playground
+
+  @game_prefix_topic "game_session:"
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
@@ -36,6 +39,14 @@ defmodule LyricWeb.GameLive.Host do
     players = Presence.list_players(to_string(socket.assigns.game.id))
 
     {:noreply, socket |> assign(:players, players)}
+  end
+
+  @impl true
+  def handle_event("start_game", _params, socket) do
+    topic = @game_prefix_topic <> to_string(socket.assigns.game.id)
+    Endpoint.broadcast(topic, "game_started", %{})
+
+    {:noreply, assign(socket, :game_state, :playing)}
   end
 
   defp get_qr_code(id) do
