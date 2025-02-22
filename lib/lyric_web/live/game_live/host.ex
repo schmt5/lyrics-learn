@@ -39,7 +39,7 @@ defmodule LyricWeb.GameLive.Host do
   end
 
   defp get_qr_code(id) do
-    joining_url = LyricWeb.Endpoint.url() <> "/games/#{id}/play"
+    joining_url = LyricWeb.Endpoint.url() <> "/games/#{id}/join"
 
     joining_url
     |> QRCode.create(:medium)

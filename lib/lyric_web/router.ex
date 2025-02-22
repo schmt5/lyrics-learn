@@ -28,6 +28,7 @@ defmodule LyricWeb.Router do
 
     live "/games", GameLive.Index
     live "/games/:id", GameLive.Host
+    live "/games/:id/join", GameLive.Join
     live "/games/:id/play", GameLive.Play
   end
 
