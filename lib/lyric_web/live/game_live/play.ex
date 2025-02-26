@@ -4,7 +4,8 @@ defmodule LyricWeb.GameLive.Play do
   alias LyricWeb.Presence
   alias LyricWeb.Endpoint
 
-  @game_prefix_topic "game_session:"
+  @game_players_topic "game_players_session:"
+  @game_host_topic "game_host_session:"
 
   @impl true
   def mount(params, _session, socket) do
@@ -17,7 +18,6 @@ defmodule LyricWeb.GameLive.Play do
      |> assign(:game_id, game_id)
      |> assign(:player_name, player_name)
      |> assign(:status, :waiting)
-     |> assign(:round, nil)
      |> assign(:options, nil)}
   end
 
@@ -29,23 +29,40 @@ defmodule LyricWeb.GameLive.Play do
   end
 
   @impl true
-  @spec handle_info(%{:event => <<_::96>>, optional(any()) => any()}, map()) :: {:noreply, map()}
   def handle_info(%{event: "game_started"}, socket) do
-    {:noreply, assign(socket, :status, :starting)}
+    IO.inspect("Game started")
+    {:noreply, assign(socket, :status, :playing)}
   end
 
   @impl true
-  def handle_info(%{event: "game_playing", payload: %{round: round, options: options}}, socket) do
+  def handle_info(
+        %{event: "options_published", payload: %{options: options}},
+        socket
+      ) do
     {:noreply,
      socket
-     |> assign(:round, round)
-     |> assign(:options, options)
-     |> assign(:status, :playing)}
+     |> assign(:options, options)}
+  end
+
+  def handle_info(%{event: "game_finished"}, socket) do
+    {:noreply, assign(socket, :status, :finished)}
+  end
+
+  @impl true
+  def handle_event("select_option", %{"index" => index}, socket) do
+    topic = @game_host_topic <> to_string(socket.assigns.game_id)
+
+    Endpoint.broadcast(topic, "option_selected", %{
+      player_id: socket.id,
+      index: String.to_integer(index)
+    })
+
+    {:noreply, socket}
   end
 
   defp maybe_join_game(socket) do
     if connected?(socket) do
-      game_topic = @game_prefix_topic <> to_string(socket.assigns.game_id)
+      game_topic = @game_players_topic <> to_string(socket.assigns.game_id)
       player_name = socket.assigns.player_name
 
       Presence.track_player(self(), socket.assigns.game_id, player_name)
