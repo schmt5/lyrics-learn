@@ -18,6 +18,7 @@ defmodule LyricWeb.GameLive.Play do
      |> assign(:game_id, game_id)
      |> assign(:player_name, player_name)
      |> assign(:status, :waiting)
+     |> assign(:text, nil)
      |> assign(:options, nil)
      |> assign(:disabled?, false)
      |> assign(:is_correct?, nil)}
@@ -37,13 +38,14 @@ defmodule LyricWeb.GameLive.Play do
 
   @impl true
   def handle_info(
-        %{event: "options_published", payload: %{options: options}},
+        %{event: "options_published", payload: %{options: options, text: text}},
         socket
       ) do
     {:noreply,
      socket
      |> assign(:disabled?, false)
      |> assign(:is_correct?, nil)
+     |> assign(:text, text)
      |> assign(:options, options)}
   end
 

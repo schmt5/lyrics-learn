@@ -85,13 +85,19 @@ defmodule LyricWeb.GameLive.Host do
       Endpoint.broadcast(topic, "game_finished", %{})
       {:noreply, socket |> assign(:game_state, :finished)}
     else
-      options =
+      line =
         socket.assigns.lyrics.lines
         |> Enum.at(current_line, %{})
+
+      options =
+        line
         |> Map.get(:options, [])
 
+      text = line |> Map.get(:text) |> mask_word(line.word_to_guess)
+
       Endpoint.broadcast(topic, "options_published", %{
-        options: options
+        options: options,
+        text: text
       })
 
       timeout = socket.assigns.lyrics.lines |> Enum.at(current_line, %{}) |> Map.get(:timeout)
