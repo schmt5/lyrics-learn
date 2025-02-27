@@ -1,0 +1,18 @@
+.lc-feedback {
+  display: grid;
+  place-content: center;
+  height: 4rem;
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+
+.lc-text {
+  transition: transform 300ms ease-out;
+  transform: translateY(0) scale(1);
+  font-size: 3rem;
+  text-align: center;
+
+  @starting-style {
+    transform: translateY(64px) scale(0.1);
+  }
+}

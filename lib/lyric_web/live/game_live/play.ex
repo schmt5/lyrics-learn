@@ -18,7 +18,9 @@ defmodule LyricWeb.GameLive.Play do
      |> assign(:game_id, game_id)
      |> assign(:player_name, player_name)
      |> assign(:status, :waiting)
-     |> assign(:options, nil)}
+     |> assign(:options, nil)
+     |> assign(:disabled?, false)
+     |> assign(:is_correct?, nil)}
   end
 
   @impl true
@@ -30,7 +32,6 @@ defmodule LyricWeb.GameLive.Play do
 
   @impl true
   def handle_info(%{event: "game_started"}, socket) do
-    IO.inspect("Game started")
     {:noreply, assign(socket, :status, :playing)}
   end
 
@@ -41,6 +42,8 @@ defmodule LyricWeb.GameLive.Play do
       ) do
     {:noreply,
      socket
+     |> assign(:disabled?, false)
+     |> assign(:is_correct?, nil)
      |> assign(:options, options)}
   end
 
@@ -48,16 +51,20 @@ defmodule LyricWeb.GameLive.Play do
     {:noreply, assign(socket, :status, :finished)}
   end
 
+  def handle_info({:answer_corrected, is_correct?}, socket) do
+    {:noreply, assign(socket, :is_correct?, is_correct?)}
+  end
+
   @impl true
   def handle_event("select_option", %{"index" => index}, socket) do
     topic = @game_host_topic <> to_string(socket.assigns.game_id)
 
     Endpoint.broadcast(topic, "option_selected", %{
-      player_id: socket.id,
+      pid: self(),
       index: String.to_integer(index)
     })
 
-    {:noreply, socket}
+    {:noreply, socket |> assign(:disabled?, true)}
   end
 
   defp maybe_join_game(socket) do
@@ -67,16 +74,6 @@ defmodule LyricWeb.GameLive.Play do
 
       Presence.track_player(self(), socket.assigns.game_id, player_name)
       Endpoint.subscribe(game_topic)
-    end
-  end
-
-  defp get_button_color(index) do
-    case index do
-      0 -> "bg-red-500 hover:bg-red-600"
-      1 -> "bg-blue-500 hover:bg-blue-600"
-      2 -> "bg-green-500 hover:bg-green-600"
-      3 -> "bg-yellow-500 hover:bg-yellow-600"
-      _ -> "bg-gray-500 hover:bg-gray-600"
     end
   end
 end

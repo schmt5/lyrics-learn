@@ -110,14 +110,24 @@ defmodule LyricWeb.GameLive.Host do
         %{
           event: "option_selected",
           payload: %{
-            player_id: player_id,
+            pid: pid,
             index: index
           }
         },
         socket
       ) do
-    IO.inspect(player_id)
+    IO.inspect(pid)
     IO.inspect(index)
+
+    current_line = socket.assigns.current_line - 1
+
+    is_correct? =
+      socket.assigns.lyrics.lines
+      |> Enum.at(current_line, %{})
+      |> Map.get(:correct_index) == index
+
+    send(pid, {:answer_corrected, is_correct?})
+
     {:noreply, socket}
   end
 

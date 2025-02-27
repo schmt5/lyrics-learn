@@ -9,13 +9,17 @@
 
   <% :playing -> %>
   <div class="mt-24">
+
+    <.feedback is_correct?={@is_correct?} />
+
     <%= if @options do %>
     <div class="grid grid-cols-2 gap-4">
       <%= for {option, index} <- Enum.with_index(@options) do %>
       <.option_button
         phx-click="select_option"
         phx-value-index={index}
-        class={"h-24 #{get_button_color(index)}"}
+        index={index}
+        disabled={@disabled?}
       >
           <%= option %>
       </.option_button>
