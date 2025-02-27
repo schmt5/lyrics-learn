@@ -7,15 +7,40 @@ defmodule LyricWeb.Ui.Feedback do
   def feedback(assigns) do
     ~H"""
     <div class="lc-feedback" {@rest}>
-      <%= case @is_correct? do %>
-        <% true -> %>
-          <span class="lc-text">👍</span> <span class="sr-only">Richtig</span>
-        <% false -> %>
-          <span class="lc-text">👎</span> <span class="sr-only">Falsch</span>
-        <% nil -> %>
-          <p class="sr-only">Keine Feedback</p>
-      <% end %>
+      <span class="lc-text">
+        {get_icon(@is_correct?)}
+      </span>
+
+      <span class="sr-only">
+        {get_text(@is_correct?)}
+      </span>
     </div>
     """
+  end
+
+  defp get_icon(true) do
+    positive_icons = ["👍", "🎉", "✅", "🌟", "😊", "👏", "💯", "🔥", "⭐", "🚀"]
+    Enum.random(positive_icons)
+  end
+
+  defp get_icon(false) do
+    negative_icons = ["👎", "❌", "😕", "🚫", "⛔", "💔", "😢", "👀", "⚠️", "🤔"]
+    Enum.random(negative_icons)
+  end
+
+  defp get_icon(nil) do
+    nil
+  end
+
+  defp get_text(true) do
+    "Richtig"
+  end
+
+  defp get_text(false) do
+    "Falsch"
+  end
+
+  defp get_text(nil) do
+    "Keine Feedback"
   end
 end

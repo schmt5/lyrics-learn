@@ -1,38 +1,33 @@
-<div>
+<div class="h-[calc(100svh-4rem)]">
   <%= case @status do %> <% :waiting -> %>
-  <div class="flex justify-center items-center min-h-32">
-    <h1 class="text-5xl font-bold text-center text-gray-600">
+    <h1 class="text-3xl font-bold text-center text-gray-600">
       Warte auf andere Spieler:innen
     </h1>
-  </div>
-
 
   <% :playing -> %>
-  <div class="mt-24">
-
-    <.feedback is_correct?={@is_correct?} />
-
-    <%= if @options do %>
-    <div class="grid grid-cols-2 gap-4">
-      <%= for {option, index} <- Enum.with_index(@options) do %>
-      <.option_button
-        phx-click="select_option"
-        phx-value-index={index}
-        index={index}
-        disabled={@disabled?}
-      >
-          <%= option %>
-      </.option_button>
-    <% end %>
+  
+  <%= if @options do %>
+  <div class="h-full flex flex-col justify-end gap-12 pb-8">
+      <.feedback is_correct?={@is_correct?} />
+      <div class="grid grid-cols-2 gap-4">
+        <%= for {option, index} <- Enum.with_index(@options) do %>
+          <.option_button
+            phx-click="select_option"
+            phx-value-index={index}
+            index={index}
+            disabled={@disabled?}
+          >
+              <%= option %>
+          </.option_button>
+        <% end %>
+      </div>
     </div>
     <% else %>
-    <div class="flex justify-center items-center min-h-32">
-      <h1 class="text-5xl font-bold text-center bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-transparent bg-clip-text">
+      <h1 class="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-transparent bg-clip-text">
         Mach dich bereit!
       </h1>
-    </div>
     <% end %>
-  </div>
+
   <% :finished -> %>
   <p>finished</p>
   <% end %>

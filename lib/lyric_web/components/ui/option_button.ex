@@ -25,7 +25,7 @@ defmodule LyricWeb.Ui.OptionButton do
   end
 
   defp classes do
-    "h-24 inline-grid place-content-center rounded-md transition duration-150 ease-in-out py-2 px-6 font-medium leading-6 active:translate-y-px text-white active:text-white/90 text-xl uppercase trackin-wider border-b-4 active:border-transparent shadow-lg disabled:opacity-50 disabled:pointer-events-none"
+    "h-20 inline-grid place-content-center rounded-md transition duration-150 ease-in-out py-2 px-6 font-medium leading-6 active:translate-y-px text-white active:text-white/90 text-xl uppercase trackin-wider border-b-4 active:border-transparent shadow-lg disabled:opacity-50 disabled:pointer-events-none"
   end
 
   defp get_button_color(index) do
