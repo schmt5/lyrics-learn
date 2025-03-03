@@ -126,14 +126,14 @@ defmodule LyricWeb.GameLive.Host do
           word_to_guess: "secrets",
           options: ["burdens", "secrets", "sorrows", "worries"],
           correct_index: 1,
-          timeout: 9100
+          timeout: 9000
         },
         %{
           text: "To carry love, to carry children of our own",
           word_to_guess: "children",
           options: ["memories", "promises", "children", "future"],
           correct_index: 2,
-          timeout: 5300
+          timeout: 5450
         },
         %{
           text: "We are still kids, but we're so in love",
@@ -147,7 +147,7 @@ defmodule LyricWeb.GameLive.Host do
           word_to_guess: "odds",
           options: ["odds", "challenges", "obstacles", "doubts"],
           correct_index: 0,
-          timeout: 4500
+          timeout: 4300
         },
         %{
           text: "I know we'll be alright this time",
@@ -161,21 +161,21 @@ defmodule LyricWeb.GameLive.Host do
           word_to_guess: "hold",
           options: ["take", "hold", "grasp", "touch"],
           correct_index: 1,
-          timeout: 7000
+          timeout: 4100
         },
         %{
           text: "Be my girl, I'll be your man",
           word_to_guess: "girl",
           options: ["girl", "love", "wife", "partner"],
           correct_index: 0,
-          timeout: 7000
+          timeout: 4100
         },
         %{
           text: "I see my future in your eyes",
           word_to_guess: "future",
           options: ["dreams", "hope", "love", "future"],
           correct_index: 3,
-          timeout: 100000
+          timeout: 4700
         }
       ]
     }
