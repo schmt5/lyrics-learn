@@ -19,22 +19,92 @@ defmodule LyricWeb.GameLive.Host do
         %{
           text: "I found a love for me",
           word_to_guess: "love",
-          options: ["water", "love", "apple", "red"],
+          options: ["life", "love", "heart", "song"],
           correct_index: 1,
           timeout: 7800
         },
         %{
           text: "Oh, darling, just dive right in and follow my lead",
           word_to_guess: "dive",
-          options: ["beef", "drive", "dive", "might"],
+          options: ["dance", "drive", "dive", "might"],
           correct_index: 2,
           timeout: 7300
         },
         %{
           text: "Well, I found a girl, beautiful and sweet",
           word_to_guess: "girl",
-          options: ["girl", "woman", "man", "squirl"],
+          options: ["girl", "angel", "lady", "soul"],
           correct_index: 0,
+          timeout: 7600
+        },
+        %{
+          text: "Oh, I never knew you were the someone waiting for me",
+          word_to_guess: "waiting",
+          options: ["looking", "waiting", "hoping", "calling"],
+          correct_index: 1,
+          timeout: 6800
+        },
+        %{
+          text: "Cause we were just kids when we fell in love",
+          word_to_guess: "kids",
+          options: ["teens", "kids", "young", "friends"],
+          correct_index: 1,
+          timeout: 4500
+        },
+        %{
+          text: "Not knowing what it was",
+          word_to_guess: "knowing",
+          options: ["knowing", "feeling", "thinking", "seeing"],
+          correct_index: 0,
+          timeout: 4200
+        },
+        %{
+          text: "I will not give you up this time",
+          word_to_guess: "give",
+          options: ["give", "let", "throw", "push"],
+          correct_index: 0,
+          timeout: 7400
+        },
+        %{
+          text: "But darling, just kiss me slow, your heart is all I own",
+          word_to_guess: "heart",
+          options: ["love", "soul", "heart", "mind"],
+          correct_index: 2,
+          timeout: 7200
+        },
+        %{
+          text: "And in your eyes you're holding mine",
+          word_to_guess: "eyes",
+          options: ["arms", "eyes", "hands", "heart"],
+          correct_index: 1,
+          timeout: 7000
+        },
+        %{
+          text: "Baby, I'm dancing in the dark with you between my arms",
+          word_to_guess: "dancing",
+          options: ["swaying", "dancing", "singing", "standing"],
+          correct_index: 1,
+          timeout: 9800
+        },
+        %{
+          text: "Barefoot on the grass, listening to our favorite song",
+          word_to_guess: "favorite",
+          options: ["special", "favorite", "chosen", "perfect"],
+          correct_index: 1,
+          timeout: 7300
+        },
+        %{
+          text: "When you said you looked a mess, I whispered underneath my breath",
+          word_to_guess: "whispered",
+          options: ["whispered", "muttered", "mumbled", "said"],
+          correct_index: 0,
+          timeout: 7400
+        },
+        %{
+          text: "But you heard it, darling, you look perfect tonight",
+          word_to_guess: "perfect",
+          options: ["beautiful", "gorgeous", "amazing", "perfect"],
+          correct_index: 3,
           timeout: 10000
         }
       ]
