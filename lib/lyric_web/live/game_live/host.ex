@@ -190,7 +190,9 @@ defmodule LyricWeb.GameLive.Host do
        |> assign(:qr_code, qr_code)
        |> assign(:current_line, nil)
        |> assign(:lyrics, lyrics)
-       |> assign(:lines_to_display, [])}
+       |> assign(:lines_to_display, [])
+       |> assign(:board_score, %{})
+       |> assign(:ranked_players, [])}
     end
 
     host_topic = @game_host_topic <> to_string(id)
@@ -207,7 +209,9 @@ defmodule LyricWeb.GameLive.Host do
      |> assign(:qr_code, qr_code)
      |> assign(:current_line, nil)
      |> assign(:lyrics, lyrics)
-     |> assign(:lines_to_display, [])}
+     |> assign(:lines_to_display, [])
+     |> assign(:board_score, %{})
+     |> assign(:ranked_players, [])}
   end
 
   @impl true
@@ -223,7 +227,10 @@ defmodule LyricWeb.GameLive.Host do
 
     if current_line >= length(socket.assigns.lyrics.lines) do
       Endpoint.broadcast(topic, "game_finished", %{})
-      {:noreply, socket |> assign(:game_state, :finished)}
+      ranked_players = get_ranked_players(socket.assigns.players, socket.assigns.board_score)
+
+      {:noreply,
+       socket |> assign(:game_state, :finished) |> assign(:ranked_players, ranked_players)}
     else
       line =
         socket.assigns.lyrics.lines
@@ -262,9 +269,6 @@ defmodule LyricWeb.GameLive.Host do
         },
         socket
       ) do
-    IO.inspect(pid)
-    IO.inspect(index)
-
     current_line = socket.assigns.current_line - 1
 
     is_correct? =
@@ -273,8 +277,11 @@ defmodule LyricWeb.GameLive.Host do
       |> Map.get(:correct_index) == index
 
     send(pid, {:answer_corrected, is_correct?})
+    score = Map.get(socket.assigns.board_score, pid, 0)
+    new_score = if is_correct?, do: score + 100, else: score
+    board_score = Map.put(socket.assigns.board_score, pid, new_score)
 
-    {:noreply, socket}
+    {:noreply, socket |> assign(:board_score, board_score)}
   end
 
   @impl true
@@ -308,4 +315,28 @@ defmodule LyricWeb.GameLive.Host do
   defp mask_word(string, word) do
     String.replace(string, word, "_____", case: :lower, count: 1)
   end
+
+  defp get_ranked_players(players, board_score) do
+    players
+    |> Enum.map(fn player ->
+      score = Map.get(board_score, player.pid, 0)
+      player |> Map.put(:score, score)
+    end)
+    |> Enum.sort_by(& &1.score, :desc)
+  end
+
+  defp rank_badge_class(1),
+    do:
+      "flex items-center justify-center w-8 h-8 rounded-full bg-yellow-500 text-gray-900 font-bold"
+
+  defp rank_badge_class(2),
+    do:
+      "flex items-center justify-center w-8 h-8 rounded-full bg-gray-400 text-gray-900 font-bold"
+
+  defp rank_badge_class(3),
+    do:
+      "flex items-center justify-center w-8 h-8 rounded-full bg-yellow-700 text-gray-900 font-bold"
+
+  defp rank_badge_class(_),
+    do: "flex items-center justify-center w-8 h-8 rounded-full bg-gray-600 text-white font-bold"
 end

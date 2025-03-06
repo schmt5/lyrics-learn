@@ -41,5 +41,23 @@
     <% end %>
  </div>
 <% :finished -> %>
-<p>finished</p>
+<div class="max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+  <div class="bg-purple-700 py-3 px-4">
+    <h2 class="text-xl font-bold text-white text-center">Player Rankings</h2>
+  </div>
+  
+  <ul class="divide-y divide-gray-700">
+    <%= for {player, index} <- Enum.with_index(@ranked_players, 1) do %>
+      <li class="flex items-center justify-between py-3 px-4 hover:bg-gray-700 transition-colors">
+        <div class="flex items-center">
+          <div class={rank_badge_class(index)}>
+            <%= index %>
+          </div>
+          <div class="ml-4 font-medium text-white"><%= player.name %></div>
+        </div>
+        <div class="text-lg font-bold text-yellow-400"><%= player.score %> pts</div>
+      </li>
+    <% end %>
+  </ul>
+</div>
 <% end %>

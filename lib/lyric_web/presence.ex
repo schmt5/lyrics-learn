@@ -37,6 +37,7 @@ defmodule LyricWeb.Presence do
     color = Enum.random(@colors)
 
     Presence.track(pid, topic, "players", %{
+      pid: pid,
       name: player_name,
       color: color
     })
@@ -45,6 +46,7 @@ defmodule LyricWeb.Presence do
   def list_players(game_id) do
     topic = @player_activity_prefix_topic <> game_id
 
+    IO.inspect(Presence.list(topic))
     Presence.list(topic) |> get_in(["players", :metas]) || []
   end
 end
