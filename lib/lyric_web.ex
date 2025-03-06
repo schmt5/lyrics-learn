@@ -93,6 +93,7 @@ defmodule LyricWeb do
       import LyricWeb.Ui.ButtonLink
       import LyricWeb.Ui.OptionButton
       import LyricWeb.Ui.Feedback
+      import LyricWeb.Ui.Line
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

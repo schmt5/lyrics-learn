@@ -30,9 +30,12 @@
         </h1>
       </div>
     <% else %>
-      <div>
-        <%= for line <- @lines_to_display do %>
-          <p class="text-xl"><%= line %></p>
+      <div 
+        id="lyrics-container"
+        phx-hook="AutoScrollToBottom"
+        class="h-80 overflow-auto bg-sky-50 rounded-lg border-2 border-sky-100 p-4">
+        <%= for {line, index} <- Enum.with_index(@lines_to_display) do %>
+         <.line index={index} total={length(@lines_to_display)}><%= line %></.line>
         <% end %>
       </div>
     <% end %>
