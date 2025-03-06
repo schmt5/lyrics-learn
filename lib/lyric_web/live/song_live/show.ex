@@ -23,7 +23,6 @@ defmodule LyricWeb.SongLive.Show do
       {:ok, game} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Game created successfully")
          |> push_navigate(to: ~p"/games/#{game.id}")}
 
       {:error, _changeset} ->

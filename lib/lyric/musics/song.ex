@@ -6,6 +6,7 @@ defmodule Lyric.Musics.Song do
     field :title, :string
     field :artist, :string
     field :album, :string
+    field :lyrics, :map
 
     has_many :games, Lyric.Playground.Game
 
@@ -15,7 +16,7 @@ defmodule Lyric.Musics.Song do
   @doc false
   def changeset(song, attrs) do
     song
-    |> cast(attrs, [:title, :artist, :album])
+    |> cast(attrs, [:title, :artist, :album, :lyrics])
     |> validate_required([:title, :artist, :album])
   end
 end

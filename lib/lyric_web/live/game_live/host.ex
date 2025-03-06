@@ -11,171 +11,103 @@ defmodule LyricWeb.GameLive.Host do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     game = Playground.get_game_with_song!(id)
+    # lyrics = game.song.lyrics
+
     {:ok, qr_code} = get_qr_code(id)
 
-    lyrics = %{
-      initial_timeout: 3000,
-      lines: [
+    shiver_lyrics = %{
+      "initial_timeout" => 12000,
+      "lines" => [
         %{
-          text: "I found a love for me",
-          word_to_guess: "love",
-          options: ["life", "love", "heart", "song"],
-          correct_index: 1,
-          timeout: 7700
+          "text" => "I took an arrow to the heart",
+          "word_to_guess" => "arrow",
+          "options" => ["bullet", "arrow", "dagger", "blade"],
+          "correct_index" => 1,
+          "timeout" => 3000
         },
         %{
-          text: "Oh, darling, just dive right in and follow my lead",
-          word_to_guess: "dive",
-          options: ["dance", "drive", "dive", "might"],
-          correct_index: 2,
-          timeout: 7300
+          "text" => "I never kissed a mouth that taste like yours",
+          "word_to_guess" => "kissed",
+          "options" => ["kissed", "missed", "kiss", "mixed"],
+          "correct_index" => 1,
+          "timeout" => 4000
         },
         %{
-          text: "Well, I found a girl, beautiful and sweet",
-          word_to_guess: "girl",
-          options: ["girl", "angel", "lady", "soul"],
-          correct_index: 0,
-          timeout: 7600
+          "text" => "Strawberries and somethin' more",
+          "word_to_guess" => "Strawberries",
+          "options" => ["Raspberries", "Honey", "Cherries", "Strawberries"],
+          "correct_index" => 0,
+          "timeout" => 3200
         },
         %{
-          text: "Oh, I never knew you were the someone waiting for me",
-          word_to_guess: "waiting",
-          options: ["looking", "waiting", "hoping", "calling"],
-          correct_index: 1,
-          timeout: 6800
+          "text" => "Ooh, yeah, I want it all",
+          "word_to_guess" => "want",
+          "options" => ["need", "want", "take", "wanted"],
+          "correct_index" => 1,
+          "timeout" => 3300
         },
         %{
-          text: "Cause we were just kids when we fell in love",
-          word_to_guess: "kids",
-          options: ["teens", "kids", "young", "friends"],
-          correct_index: 1,
-          timeout: 4500
+          "text" => "Lipstick on my guitar, ooh",
+          "word_to_guess" => "guitar",
+          "options" => ["guitar", "collar", "cigar", "memoir"],
+          "correct_index" => 0,
+          "timeout" => 4000
         },
         %{
-          text: "Not knowing what it was",
-          word_to_guess: "knowing",
-          options: ["knowing", "feeling", "thinking", "seeing"],
-          correct_index: 0,
-          timeout: 4200
+          "text" => "Fill up the engines, we can drive real far",
+          "word_to_guess" => "engines",
+          "options" => ["engines", "vehicle", "feelings", "benches"],
+          "correct_index" => 0,
+          "timeout" => 3000
         },
         %{
-          text: "I will not give you up this time",
-          word_to_guess: "give",
-          options: ["give", "let", "throw", "push"],
-          correct_index: 0,
-          timeout: 7400
+          "text" => "Go dancing underneath the stars",
+          "word_to_guess" => "stars",
+          "options" => ["sky", "stars", "moon", "lights"],
+          "correct_index" => 1,
+          "timeout" => 4200
         },
         %{
-          text: "But darling, just kiss me slow, your heart is all I own",
-          word_to_guess: "heart",
-          options: ["love", "soul", "heart", "mind"],
-          correct_index: 2,
-          timeout: 7200
+          "text" => "Ooh, yeah, I want it all, mm",
+          "word_to_guess" => "yeah",
+          "options" => ["now", "all", "yeah", "too"],
+          "correct_index" => 1,
+          "timeout" => 2600
         },
         %{
-          text: "And in your eyes you're holding mine",
-          word_to_guess: "eyes",
-          options: ["arms", "eyes", "hands", "heart"],
-          correct_index: 1,
-          timeout: 7000
+          "text" => "Ooh, you got me feeling like",
+          "word_to_guess" => "feeling",
+          "options" => ["feel", "feeling", "dreaming", "wishing"],
+          "correct_index" => 1,
+          "timeout" => 3000
         },
         %{
-          text: "Baby, I'm dancing in the dark with you between my arms",
-          word_to_guess: "dancing",
-          options: ["swaying", "dancing", "singing", "standing"],
-          correct_index: 1,
-          timeout: 10000
+          "text" => "I wanna be that guy I wanna kiss your eyes",
+          "word_to_guess" => "kiss",
+          "options" => ["kiss", "miss", "hold", "feel"],
+          "correct_index" => 0,
+          "timeout" => 3200
         },
         %{
-          text: "Barefoot on the grass, listening to our favorite song",
-          word_to_guess: "favorite",
-          options: ["special", "favorite", "chosen", "perfect"],
-          correct_index: 1,
-          timeout: 7950
+          "text" => "I wanna drink that smile I wanna feel like I'm",
+          "word_to_guess" => "smile",
+          "options" => ["smile", "while", "style", "sight"],
+          "correct_index" => 0,
+          "timeout" => 4000
         },
         %{
-          text: "When you said you looked a mess, I whispered underneath my breath",
-          word_to_guess: "whispered",
-          options: ["whispered", "muttered", "mumbled", "said"],
-          correct_index: 0,
-          timeout: 7600
+          "text" => "Like my soul's on fire. I wanna stay up all day and all night, mm",
+          "word_to_guess" => "fire",
+          "options" => ["wire", "higher", "fire", "pyre"],
+          "correct_index" => 1,
+          "timeout" => 4200
         },
         %{
-          text: "But you heard it, darling, you look perfect tonight",
-          word_to_guess: "perfect",
-          options: ["beautiful", "gorgeous", "amazing", "perfect"],
-          correct_index: 3,
-          timeout: 13500
-        },
-        %{
-          text: "Well I found a woman, stronger than anyone I know",
-          word_to_guess: "stronger",
-          options: ["better", "kinder", "stronger", "wiser"],
-          correct_index: 2,
-          timeout: 7100
-        },
-        %{
-          text: "She shares my dreams, I hope that someday I'll share her home",
-          word_to_guess: "dreams",
-          options: ["life", "dreams", "future", "world"],
-          correct_index: 1,
-          timeout: 8000
-        },
-        %{
-          text: "I found a love, to carry more than just my secrets",
-          word_to_guess: "secrets",
-          options: ["burdens", "secrets", "sorrows", "worries"],
-          correct_index: 1,
-          timeout: 9000
-        },
-        %{
-          text: "To carry love, to carry children of our own",
-          word_to_guess: "children",
-          options: ["memories", "promises", "children", "future"],
-          correct_index: 2,
-          timeout: 5450
-        },
-        %{
-          text: "We are still kids, but we're so in love",
-          word_to_guess: "kids",
-          options: ["young", "kids", "dreamers", "growing"],
-          correct_index: 1,
-          timeout: 4500
-        },
-        %{
-          text: "Fighting against all odds",
-          word_to_guess: "odds",
-          options: ["odds", "challenges", "obstacles", "doubts"],
-          correct_index: 0,
-          timeout: 4300
-        },
-        %{
-          text: "I know we'll be alright this time",
-          word_to_guess: "alright",
-          options: ["happy", "together", "alright", "perfect"],
-          correct_index: 2,
-          timeout: 7000
-        },
-        %{
-          text: "Darling, just hold my hand",
-          word_to_guess: "hold",
-          options: ["take", "hold", "grasp", "touch"],
-          correct_index: 1,
-          timeout: 4100
-        },
-        %{
-          text: "Be my girl, I'll be your man",
-          word_to_guess: "girl",
-          options: ["girl", "love", "wife", "partner"],
-          correct_index: 0,
-          timeout: 4100
-        },
-        %{
-          text: "I see my future in your eyes",
-          word_to_guess: "future",
-          options: ["dreams", "hope", "love", "future"],
-          correct_index: 3,
-          timeout: 4700
+          "text" => "Yeah, you got me singing like",
+          "word_to_guess" => "got",
+          "options" => ["got", "had", "made", "left"],
+          "correct_index" => 0,
+          "timeout" => 4000
         }
       ]
     }
@@ -189,7 +121,7 @@ defmodule LyricWeb.GameLive.Host do
        |> assign(:players, [])
        |> assign(:qr_code, qr_code)
        |> assign(:current_line, nil)
-       |> assign(:lyrics, lyrics)
+       |> assign(:lyrics, shiver_lyrics)
        |> assign(:lines_to_display, [])
        |> assign(:board_score, %{})
        |> assign(:ranked_players, [])}
@@ -208,7 +140,7 @@ defmodule LyricWeb.GameLive.Host do
      |> assign(:players, players)
      |> assign(:qr_code, qr_code)
      |> assign(:current_line, nil)
-     |> assign(:lyrics, lyrics)
+     |> assign(:lyrics, shiver_lyrics)
      |> assign(:lines_to_display, [])
      |> assign(:board_score, %{})
      |> assign(:ranked_players, [])}
@@ -225,7 +157,7 @@ defmodule LyricWeb.GameLive.Host do
   def handle_info({:publish_options, topic}, socket) do
     current_line = socket.assigns.current_line || 0
 
-    if current_line >= length(socket.assigns.lyrics.lines) do
+    if current_line >= length(socket.assigns.lyrics["lines"]) do
       Endpoint.broadcast(topic, "game_finished", %{})
       ranked_players = get_ranked_players(socket.assigns.players, socket.assigns.board_score)
 
@@ -233,21 +165,22 @@ defmodule LyricWeb.GameLive.Host do
        socket |> assign(:game_state, :finished) |> assign(:ranked_players, ranked_players)}
     else
       line =
-        socket.assigns.lyrics.lines
+        socket.assigns.lyrics
+        |> Map.get("lines")
         |> Enum.at(current_line, %{})
 
       options =
         line
-        |> Map.get(:options, [])
+        |> Map.get("options", [])
 
-      text = line |> Map.get(:text) |> mask_word(line.word_to_guess)
+      text = line |> Map.get("text") |> mask_word(line["word_to_guess"])
 
       Endpoint.broadcast(topic, "options_published", %{
         options: options,
         text: text
       })
 
-      timeout = socket.assigns.lyrics.lines |> Enum.at(current_line, %{}) |> Map.get(:timeout)
+      timeout = socket.assigns.lyrics["lines"] |> Enum.at(current_line, %{}) |> Map.get("timeout")
       Process.send_after(self(), {:publish_options, topic}, timeout)
 
       lines_to_display = get_lines_to_display(socket.assigns.lyrics, current_line)
@@ -272,9 +205,9 @@ defmodule LyricWeb.GameLive.Host do
     current_line = socket.assigns.current_line - 1
 
     is_correct? =
-      socket.assigns.lyrics.lines
+      socket.assigns.lyrics["lines"]
       |> Enum.at(current_line, %{})
-      |> Map.get(:correct_index) == index
+      |> Map.get("correct_index") == index
 
     send(pid, {:answer_corrected, is_correct?})
     score = Map.get(socket.assigns.board_score, pid, 0)
@@ -289,7 +222,8 @@ defmodule LyricWeb.GameLive.Host do
     topic = @game_players_topic <> to_string(socket.assigns.game.id)
     Endpoint.broadcast(topic, "game_started", %{})
 
-    timeout = socket.assigns.lyrics.initial_timeout
+    timeout = socket.assigns.lyrics |> Map.get("initial_timeout")
+    IO.inspect(timeout)
     Process.send_after(self(), {:publish_options, topic}, timeout)
 
     {:noreply, socket |> assign(:game_state, :playing) |> assign(:current_line, 0)}
@@ -305,10 +239,10 @@ defmodule LyricWeb.GameLive.Host do
   end
 
   defp get_lines_to_display(lyrics, current_line_index) do
-    lyrics.lines
+    lyrics["lines"]
     |> Enum.take(current_line_index + 1)
     |> Enum.map(fn line ->
-      mask_word(line.text, line.word_to_guess)
+      mask_word(line["text"], line["word_to_guess"])
     end)
   end
 

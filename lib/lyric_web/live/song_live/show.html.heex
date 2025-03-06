@@ -1,8 +1,14 @@
 <.header>
-  Song {@song.id}
-  <:subtitle>This is a song record from your database.</:subtitle>
+  <h1 class="text-4xl text-slate-700 font-bold mb-2">
+    {@song.title}
+  </h1>
+  <p class="text-xl text-slate-700">
+    {@song.artist}, {@song.album}
+  </p>
+
+
   <:actions>
-      <.button phx-click="create_game">Spiel starten</.button>
+      <.button phx-click="create_game">Spiel erstellen</.button>
   </:actions>
 </.header>
 
