@@ -17,8 +17,9 @@ defmodule LyricWeb.Ui.Line do
 
   defp styles(index, total) do
     base_styles = "text-2xl font-bold text-center text-sky-800"
+    first_line_styles = if index == 0, do: "pt-96", else: ""
 
-    opacity_class =
+    opacity_styles =
       cond do
         is_nil(index) or is_nil(total) -> ""
         # Last line (most recent) - full opacity
@@ -27,6 +28,6 @@ defmodule LyricWeb.Ui.Line do
         true -> "opacity-30"
       end
 
-    "#{base_styles} #{opacity_class}"
+    "#{base_styles} #{first_line_styles} #{opacity_styles}"
   end
 end
