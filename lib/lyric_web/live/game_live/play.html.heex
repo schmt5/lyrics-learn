@@ -5,12 +5,19 @@
     </h1>
 
   <% :playing -> %>
-  <p class="text-xl font-bold text-center text-gray-600">
-    <%= @text %>
-  </p>
+  <div 
+    id="lyrics-container"
+    phx-hook="AutoScrollToBottom"
+    class="h-1/2 overflow-auto bg-sky-50 rounded-lg border-2 border-sky-100 p-4"
+    :if={@lines_to_display != nil}
+  >
+    <%= for {line, index} <- Enum.with_index(@lines_to_display) do %>
+      <.line index={index} total={length(@lines_to_display)}><%= line %></.line>
+    <% end %>
+</div>
   
   <%= if @options do %>
-  <div class="h-full flex flex-col justify-end gap-12 pb-8">
+  <div class="flex flex-col justify-end gap-12 pb-8">
       <.feedback is_correct?={@is_correct?} />
 
       <div class="grid grid-cols-2 gap-4">

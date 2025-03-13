@@ -11,7 +11,103 @@ defmodule LyricWeb.GameLive.Host do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     game = Playground.get_game_with_song!(id)
-    lyrics = game.song.lyrics
+    # lyrics = game.song.lyrics
+    lyrics = %{
+      "initial_timeout" => 12000,
+      "lines" => [
+        %{
+          "text" => "I took an arrow to the heart",
+          "word_to_guess" => "arrow",
+          "options" => ["bullet", "arrow", "dagger", "blade"],
+          "correct_index" => 1,
+          "timeout" => 3000
+        },
+        %{
+          "text" => "I never kissed a mouth that taste like yours",
+          "word_to_guess" => "kissed",
+          "options" => ["miss", "missed", "kiss", "kissed"],
+          "correct_index" => 3,
+          "timeout" => 4000
+        },
+        %{
+          "text" => "Strawberries and somethin' more",
+          "word_to_guess" => "Strawberries",
+          "options" => ["Raspberries", "Honey", "Cherries", "Strawberries"],
+          "correct_index" => 3,
+          "timeout" => 3200
+        },
+        %{
+          "text" => "Ooh, yeah, I want it all",
+          "word_to_guess" => "want",
+          "options" => ["need", "want", "take", "wanted"],
+          "correct_index" => 1,
+          "timeout" => 3300
+        },
+        %{
+          "text" => "Lipstick on my guitar, ooh",
+          "word_to_guess" => "guitar",
+          "options" => ["guitar", "collar", "cigar", "memoir"],
+          "correct_index" => 0,
+          "timeout" => 4000
+        },
+        %{
+          "text" => "Fill up the engines, we can drive real far",
+          "word_to_guess" => "engines",
+          "options" => ["feelings", "vehicle", "engines", "benches"],
+          "correct_index" => 2,
+          "timeout" => 3000
+        },
+        %{
+          "text" => "Go dancing underneath the stars",
+          "word_to_guess" => "stars",
+          "options" => ["enhancing", "dancing", "balancing", "chance"],
+          "correct_index" => 1,
+          "timeout" => 4200
+        },
+        %{
+          "text" => "Ooh, yeah, I want it all, mm",
+          "word_to_guess" => "yeah",
+          "options" => ["now", "all", "yeah", "too"],
+          "correct_index" => 2,
+          "timeout" => 2600
+        },
+        %{
+          "text" => "Ooh, you got me feeling like",
+          "word_to_guess" => "feeling",
+          "options" => ["feel", "feeling", "dreaming", "wishing"],
+          "correct_index" => 1,
+          "timeout" => 3000
+        },
+        %{
+          "text" => "I wanna be that guy I wanna kiss your eyes",
+          "word_to_guess" => "kiss",
+          "options" => ["kiss", "miss", "hold", "feel"],
+          "correct_index" => 0,
+          "timeout" => 3200
+        },
+        %{
+          "text" => "I wanna drink that smile I wanna feel like I'm",
+          "word_to_guess" => "smile",
+          "options" => ["style", "while", "smile", "sight"],
+          "correct_index" => 2,
+          "timeout" => 4000
+        },
+        %{
+          "text" => "Like my soul's on fire. I wanna stay up all day and all night, mm",
+          "word_to_guess" => "fire",
+          "options" => ["wire", "higher", "fire", "pyre"],
+          "correct_index" => 2,
+          "timeout" => 4200
+        },
+        %{
+          "text" => "Yeah, you got me singing like",
+          "word_to_guess" => "got",
+          "options" => ["get", "had", "made", "got"],
+          "correct_index" => 3,
+          "timeout" => 4000
+        }
+      ]
+    }
 
     {:ok, qr_code} = get_qr_code(id)
 
@@ -76,17 +172,15 @@ defmodule LyricWeb.GameLive.Host do
         line
         |> Map.get("options", [])
 
-      text = line |> Map.get("text") |> mask_word(line["word_to_guess"])
+      lines_to_display = get_lines_to_display(socket.assigns.lyrics, current_line)
 
       Endpoint.broadcast(topic, "options_published", %{
         options: options,
-        text: text
+        lines_to_display: lines_to_display
       })
 
       timeout = socket.assigns.lyrics["lines"] |> Enum.at(current_line, %{}) |> Map.get("timeout")
       Process.send_after(self(), {:publish_options, topic}, timeout)
-
-      lines_to_display = get_lines_to_display(socket.assigns.lyrics, current_line)
 
       {:noreply,
        socket
@@ -144,13 +238,19 @@ defmodule LyricWeb.GameLive.Host do
   defp get_lines_to_display(lyrics, current_line_index) do
     lyrics["lines"]
     |> Enum.take(current_line_index + 1)
-    |> Enum.map(fn line ->
-      mask_word(line["text"], line["word_to_guess"])
+    |> Enum.with_index()
+    |> Enum.map(fn {line, index} ->
+      if index == current_line_index do
+        mask_word(line["text"], line["word_to_guess"])
+      else
+        line["text"]
+      end
     end)
   end
 
   defp mask_word(string, word) do
-    String.replace(string, word, "_____", case: :lower, count: 1)
+    mask = String.duplicate("_", String.length(word))
+    String.replace(string, word, mask, case: :lower, count: 1)
   end
 
   defp get_ranked_players(players, board_score) do
