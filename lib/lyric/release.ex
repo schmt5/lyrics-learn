@@ -170,74 +170,40 @@ defmodule Lyric.Release do
         "initial_timeout" => 12000,
         "lines" => [
           %{
-            "text" => "I took an arrow to the heart",
+            "text" =>
+              "I took an arrow to the heart. I never kissed a mouth that taste like yours",
             "word_to_guess" => "arrow",
             "options" => ["bullet", "arrow", "dagger", "blade"],
             "correct_index" => 1,
-            "timeout" => 3000
+            "timeout" => 7000
           },
           %{
-            "text" => "I never kissed a mouth that taste like yours",
-            "word_to_guess" => "kissed",
-            "options" => ["miss", "missed", "kiss", "kissed"],
-            "correct_index" => 3,
-            "timeout" => 4000
-          },
-          %{
-            "text" => "Strawberries and somethin' more",
+            "text" => "Strawberries and somethin' more. Ooh, yeah, I want it all",
             "word_to_guess" => "Strawberries",
             "options" => ["Raspberries", "Honey", "Cherries", "Strawberries"],
             "correct_index" => 3,
-            "timeout" => 3200
+            "timeout" => 6500
           },
           %{
-            "text" => "Ooh, yeah, I want it all",
-            "word_to_guess" => "want",
-            "options" => ["need", "want", "take", "wanted"],
-            "correct_index" => 1,
-            "timeout" => 3300
-          },
-          %{
-            "text" => "Lipstick on my guitar, ooh",
+            "text" => "Lipstick on my guitar, ooh. Fill up the engines, we can drive real far",
             "word_to_guess" => "guitar",
             "options" => ["guitar", "collar", "cigar", "memoir"],
             "correct_index" => 0,
-            "timeout" => 4000
+            "timeout" => 7000
           },
           %{
-            "text" => "Fill up the engines, we can drive real far",
-            "word_to_guess" => "engines",
-            "options" => ["feelings", "vehicle", "engines", "benches"],
-            "correct_index" => 2,
-            "timeout" => 3000
-          },
-          %{
-            "text" => "Go dancing underneath the stars",
+            "text" => "Go dancing underneath the stars. Ooh, yeah, I want it all, mm",
             "word_to_guess" => "stars",
-            "options" => ["enhancing", "dancing", "balancing", "chance"],
-            "correct_index" => 1,
-            "timeout" => 4200
-          },
-          %{
-            "text" => "Ooh, yeah, I want it all, mm",
-            "word_to_guess" => "yeah",
-            "options" => ["now", "all", "yeah", "too"],
+            "options" => ["mars", "cars", "stars", "moon"],
             "correct_index" => 2,
-            "timeout" => 2600
+            "timeout" => 6800
           },
           %{
-            "text" => "Ooh, you got me feeling like",
-            "word_to_guess" => "feeling",
-            "options" => ["feel", "feeling", "dreaming", "wishing"],
-            "correct_index" => 1,
-            "timeout" => 3000
-          },
-          %{
-            "text" => "I wanna be that guy I wanna kiss your eyes",
-            "word_to_guess" => "kiss",
-            "options" => ["kiss", "miss", "hold", "feel"],
+            "text" => "Ooh, you got me feeling like. I wanna be that guy I wanna kiss your eyes",
+            "word_to_guess" => "guy",
+            "options" => ["guy", "fly", "by", "gray"],
             "correct_index" => 0,
-            "timeout" => 3200
+            "timeout" => 6200
           },
           %{
             "text" => "I wanna drink that smile I wanna feel like I'm",
@@ -247,18 +213,12 @@ defmodule Lyric.Release do
             "timeout" => 4000
           },
           %{
-            "text" => "Like my soul's on fire. I wanna stay up all day and all night, mm",
+            "text" =>
+              "Like my soul's on fire. I wanna stay up all day and all night, mm. Yeah, you got me singing like",
             "word_to_guess" => "fire",
             "options" => ["wire", "higher", "fire", "pyre"],
             "correct_index" => 2,
-            "timeout" => 4200
-          },
-          %{
-            "text" => "Yeah, you got me singing like",
-            "word_to_guess" => "got",
-            "options" => ["get", "had", "made", "got"],
-            "correct_index" => 3,
-            "timeout" => 4000
+            "timeout" => 8200
           }
         ]
       }
